@@ -135,7 +135,8 @@ class NetBox:
             if "device-bays" in device_type:
                 self.device_types.create_device_bays(device_type["device-bays"], dt.id)
             if self.modules and 'module-bays' in device_type:
-                self.device_types.create_module_bays(device_type['module-bays'], dt.id)
+                None
+                #self.device_types.create_module_bays(device_type['module-bays'], dt.id)
 
             # Finally, update images if any
             if saved_images:
