@@ -116,7 +116,8 @@ class NetBox:
                     continue
 
             if "interfaces" in device_type:
-                self.device_types.create_interfaces(device_type["interfaces"], dt.id)
+                None
+                     #self.device_types.create_interfaces(device_type["interfaces"], dt.id)
             if "power-ports" in device_type:
                 self.device_types.create_power_ports(device_type["power-ports"], dt.id)
             if "power-port" in device_type:
