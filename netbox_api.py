@@ -114,30 +114,33 @@ class NetBox:
                     self.handle.log(f'Error {e.error} creating device type:'
                                     f' {device_type["manufacturer"]["name"]} {device_type["model"]}')
                     continue
-
-            if "interfaces" in device_type:
-                # None
-                self.handle.verbose_log(f'create_interfaces({device_type["interfaces"]} {dt.id} -) ')
-                self.device_types.create_interfaces(device_type["interfaces"], dt.id)
-            if "power-ports" in device_type:
-                self.device_types.create_power_ports(device_type["power-ports"], dt.id)
-            if "power-port" in device_type:
-                self.device_types.create_power_ports(device_type["power-port"], dt.id)
-            if "console-ports" in device_type:
-                self.device_types.create_console_ports(device_type["console-ports"], dt.id)
-            if "power-outlets" in device_type:
-                self.device_types.create_power_outlets(device_type["power-outlets"], dt.id)
-            if "console-server-ports" in device_type:
-                self.device_types.create_console_server_ports(device_type["console-server-ports"], dt.id)
-            if "rear-ports" in device_type:
-                self.device_types.create_rear_ports(device_type["rear-ports"], dt.id)
-            if "front-ports" in device_type:
-                self.device_types.create_front_ports(device_type["front-ports"], dt.id)
-            if "device-bays" in device_type:
-                self.device_types.create_device_bays(device_type["device-bays"], dt.id)
-            if self.modules and 'module-bays' in device_type:
-                #None
-                self.device_types.create_module_bays(device_type['module-bays'], dt.id)
+            try:
+                if "interfaces" in device_type:
+                    # None
+                    self.handle.verbose_log(f'create_interfaces({device_type["interfaces"]} {dt.id} -) ')
+                    self.device_types.create_interfaces(device_type["interfaces"], dt.id)
+                if "power-ports" in device_type:
+                    self.device_types.create_power_ports(device_type["power-ports"], dt.id)
+                if "power-port" in device_type:
+                    self.device_types.create_power_ports(device_type["power-port"], dt.id)
+                if "console-ports" in device_type:
+                    self.device_types.create_console_ports(device_type["console-ports"], dt.id)
+                if "power-outlets" in device_type:
+                    self.device_types.create_power_outlets(device_type["power-outlets"], dt.id)
+                if "console-server-ports" in device_type:
+                    self.device_types.create_console_server_ports(device_type["console-server-ports"], dt.id)
+                if "rear-ports" in device_type:
+                    self.device_types.create_rear_ports(device_type["rear-ports"], dt.id)
+                if "front-ports" in device_type:
+                    self.device_types.create_front_ports(device_type["front-ports"], dt.id)
+                if "device-bays" in device_type:
+                    self.device_types.create_device_bays(device_type["device-bays"], dt.id)
+                if self.modules and 'module-bays' in device_type:
+                    #None
+                    self.device_types.create_module_bays(device_type['module-bays'], dt.id)
+            except Exception as e:
+                self.handle.log(f'Error {e} creating device type:'
+                                f' {device_type["manufacturer"]["name"]} {device_type["model"]}')
 
             # Finally, update images if any
             if saved_images:
