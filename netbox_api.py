@@ -200,16 +200,16 @@ class DeviceTypes:
         return {str(item): item for item in self.netbox.dcim.device_types.all()}
 
     def get_power_ports(self, device_type):
-        return {str(item): item for item in self.netbox.dcim.power_port_templates.filter(devicetype_id=device_type)}
+        return {str(item): item for item in self.netbox.dcim.power_port_templates.filter(device_type_id=device_type)}
 
     def get_rear_ports(self, device_type):
-        return {str(item): item for item in self.netbox.dcim.rear_port_templates.filter(devicetype_id=device_type)}
+        return {str(item): item for item in self.netbox.dcim.rear_port_templates.filter(device_type_id=device_type)}
 
     def get_module_power_ports(self, module_type):
-        return {str(item): item for item in self.netbox.dcim.power_port_templates.filter(moduletype_id=module_type)}
+        return {str(item): item for item in self.netbox.dcim.power_port_templates.filter(device_type_id=module_type)}
 
     def get_module_rear_ports(self, module_type):
-        return {str(item): item for item in self.netbox.dcim.rear_port_templates.filter(moduletype_id=module_type)}
+        return {str(item): item for item in self.netbox.dcim.rear_port_templates.filter(device_type_id=module_type)}
 
     def get_device_type_ports_to_create(self, dcim_ports, device_type, existing_ports):
         #self.handle.verbose_log(f'get_device_type_ports_to_create({dcim_ports}, {device_type}, {existing_ports})')
@@ -228,7 +228,7 @@ class DeviceTypes:
 
     def create_interfaces(self, interfaces, device_type):
         existing_interfaces = {str(item): item for item in self.netbox.dcim.interface_templates.filter(
-            devicetype_id=device_type)}
+            device_type_id=device_type)}
         # self.handle.verbose_log(f'create_interfaces()={existing_interfaces}')
         to_create = self.get_device_type_ports_to_create(
             interfaces, device_type, existing_interfaces)
