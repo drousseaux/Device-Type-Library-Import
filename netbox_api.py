@@ -117,6 +117,7 @@ class NetBox:
 
             if "interfaces" in device_type:
                 # None
+                self.handle.verbose_log(f'"""""""""""""""{device_type["interfaces"]} {dt.id} - ')
                 self.device_types.create_interfaces(device_type["interfaces"], dt.id)
             if "power-ports" in device_type:
                 self.device_types.create_power_ports(device_type["power-ports"], dt.id)
