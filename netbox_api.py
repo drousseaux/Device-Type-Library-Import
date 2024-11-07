@@ -117,7 +117,7 @@ class NetBox:
 
             if "interfaces" in device_type:
                 # None
-                self.handle.verbose_log(f'"""""""""""""""{device_type["interfaces"]} {dt.id} - ')
+                self.handle.verbose_log(f'create_interfaces({device_type["interfaces"]} {dt.id} -) ')
                 self.device_types.create_interfaces(device_type["interfaces"], dt.id)
             if "power-ports" in device_type:
                 self.device_types.create_power_ports(device_type["power-ports"], dt.id)
@@ -209,6 +209,7 @@ class DeviceTypes:
         return {str(item): item for item in self.netbox.dcim.rear_port_templates.filter(moduletype_id=module_type)}
 
     def get_device_type_ports_to_create(self, dcim_ports, device_type, existing_ports):
+        self.handle.verbose_log(f'get_device_type_ports_to_create({dcim_ports}, {device_type}, {existing_ports})')
         to_create = [port for port in dcim_ports if port['name'] not in existing_ports]
         for port in to_create:
             port['device_type'] = device_type
@@ -225,6 +226,7 @@ class DeviceTypes:
     def create_interfaces(self, interfaces, device_type):
         existing_interfaces = {str(item): item for item in self.netbox.dcim.interface_templates.filter(
             devicetype_id=device_type)}
+        self.handle.verbose_log(f'create_interfaces()={existing_interfaces}')
         to_create = self.get_device_type_ports_to_create(
             interfaces, device_type, existing_interfaces)
 
