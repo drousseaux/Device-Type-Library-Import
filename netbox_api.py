@@ -116,8 +116,8 @@ class NetBox:
                     continue
 
             if "interfaces" in device_type:
-                None
-                     #self.device_types.create_interfaces(device_type["interfaces"], dt.id)
+                # None
+                self.device_types.create_interfaces(device_type["interfaces"], dt.id)
             if "power-ports" in device_type:
                 self.device_types.create_power_ports(device_type["power-ports"], dt.id)
             if "power-port" in device_type:
@@ -135,8 +135,8 @@ class NetBox:
             if "device-bays" in device_type:
                 self.device_types.create_device_bays(device_type["device-bays"], dt.id)
             if self.modules and 'module-bays' in device_type:
-                None
-                #self.device_types.create_module_bays(device_type['module-bays'], dt.id)
+                #None
+                self.device_types.create_module_bays(device_type['module-bays'], dt.id)
 
             # Finally, update images if any
             if saved_images:
