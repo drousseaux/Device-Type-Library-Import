@@ -209,7 +209,7 @@ class DeviceTypes:
         return {str(item): item for item in self.netbox.dcim.rear_port_templates.filter(moduletype_id=module_type)}
 
     def get_device_type_ports_to_create(self, dcim_ports, device_type, existing_ports):
-        self.handle.verbose_log(f'get_device_type_ports_to_create({dcim_ports}, {device_type}, {existing_ports})')
+        #self.handle.verbose_log(f'get_device_type_ports_to_create({dcim_ports}, {device_type}, {existing_ports})')
         to_create = [port for port in dcim_ports if port['name'] not in existing_ports]
         for port in to_create:
             port['device_type'] = device_type
@@ -226,18 +226,22 @@ class DeviceTypes:
     def create_interfaces(self, interfaces, device_type):
         existing_interfaces = {str(item): item for item in self.netbox.dcim.interface_templates.filter(
             devicetype_id=device_type)}
-        self.handle.verbose_log(f'create_interfaces()={existing_interfaces}')
+        # self.handle.verbose_log(f'create_interfaces()={existing_interfaces}')
         to_create = self.get_device_type_ports_to_create(
             interfaces, device_type, existing_interfaces)
 
         if to_create:
             try:
+                self.handle.verbose_log(f'create_interfaces')
                 self.counter.update({'updated':
                                      self.handle.log_device_ports_created(
                                          self.netbox.dcim.interface_templates.create(to_create), "Interface")
                                      })
             except pynetbox.RequestError as excep:
                 self.handle.log(f"Error '{excep.error}' creating Interface")
+        else:
+            self.handle.verbose_log(f'Not create_interfaces()')
+
 
     def create_power_ports(self, power_ports, device_type):
         existing_power_ports = self.get_power_ports(device_type)
